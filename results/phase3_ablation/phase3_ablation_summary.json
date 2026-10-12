@@ -1,0 +1,86 @@
+{
+  "models": {
+    "MLP_PCA8": {
+      "name": "Classical MLP (PCA-8, R^8)",
+      "auc": 0.7802,
+      "accuracy": 0.5016,
+      "sens": 0.2462,
+      "spec": 0.9274,
+      "params": 2000,
+      "cm": [
+        [
+          217,
+          17
+        ],
+        [
+          294,
+          96
+        ]
+      ]
+    },
+    "QSVM_P1": {
+      "name": "ZZ Kernel QSVM (Phase 1 Opt, C^256)",
+      "auc": 0.9171,
+      "accuracy": 0.8622,
+      "sens": 0.9205,
+      "spec": 0.765,
+      "params": 0,
+      "cm": [
+        [
+          179,
+          55
+        ],
+        [
+          31,
+          359
+        ]
+      ]
+    },
+    "VQC_P2": {
+      "name": "ZZ + VQC Hybrid (Phase 2 Opt, C^256)",
+      "auc": 0.9132,
+      "accuracy": 0.8397,
+      "sens": 0.8462,
+      "spec": 0.8291,
+      "params": 34,
+      "cm": [
+        [
+          194,
+          40
+        ],
+        [
+          60,
+          330
+        ]
+      ]
+    },
+    "CNN_784": {
+      "name": "Classical CNN (784 pixels, R^784)",
+      "auc": 0.9648,
+      "accuracy": 0.8429,
+      "sens": 1.0,
+      "spec": 0.5812,
+      "params": 50000,
+      "cm": [
+        [
+          136,
+          98
+        ],
+        [
+          0,
+          390
+        ]
+      ]
+    }
+  },
+  "ablation_deltas": {
+    "zz_feature_map": {
+      "delta_auc": 0.13690000000000002,
+      "delta_spec": -0.1624
+    },
+    "vqc_rotations": {
+      "delta_auc": -0.0039000000000000146,
+      "delta_spec": 0.06409999999999993
+    }
+  }
+}
