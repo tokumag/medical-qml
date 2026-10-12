@@ -1,0 +1,205 @@
+{
+  "metadata": {
+    "project": "Hilbert Space Topology and Feature Mapping in Medical Image Classification",
+    "dataset": "PneumoniaMNIST (MedMNIST v2, N_test=624)",
+    "qubits": 8,
+    "hilbert_dimension": 256
+  },
+  "constants": {
+    "angle_scale": 0.7853981633974483,
+    "evr_raw": [
+      0.41413912,
+      0.10647308,
+      0.05541586,
+      0.0452576,
+      0.03899284,
+      0.03691639,
+      0.02805536,
+      0.02088385
+    ],
+    "evr_weights": [
+      1.0,
+      0.507,
+      0.366,
+      0.331,
+      0.307,
+      0.299,
+      0.26,
+      0.225
+    ],
+    "obs_weights": [
+      0.5554,
+      0.1428,
+      0.0744,
+      0.0607,
+      0.0523,
+      0.0495,
+      0.0376,
+      0.028
+    ],
+    "t_star": 0.8004,
+    "pos_weight": 1.6666666666666667
+  },
+  "phase0_baselines": {
+    "cnn": {
+      "auc": 0.9648,
+      "accuracy": 0.8429,
+      "sensitivity": 1.0,
+      "specificity": 0.5812,
+      "params": 50000,
+      "cm": [
+        [
+          136,
+          98
+        ],
+        [
+          0,
+          390
+        ]
+      ]
+    },
+    "mlp": {
+      "auc": 0.7802,
+      "accuracy": 0.5016,
+      "sensitivity": 0.2462,
+      "specificity": 0.9274,
+      "params": 2000,
+      "cm": [
+        [
+          217,
+          17
+        ],
+        [
+          294,
+          96
+        ]
+      ]
+    }
+  },
+  "phase1_qsvm": {
+    "broken": {
+      "auc": 0.6824,
+      "accuracy": 0.625,
+      "sensitivity": 1.0,
+      "specificity": 0.0,
+      "delta_kernel": 2e-05
+    },
+    "optimized": {
+      "auc": 0.9171,
+      "accuracy": 0.8622,
+      "sensitivity": 0.9205,
+      "specificity": 0.765,
+      "delta_kernel": 0.0648,
+      "cm": [
+        [
+          179,
+          55
+        ],
+        [
+          31,
+          359
+        ]
+      ]
+    }
+  },
+  "phase2_vqc": {
+    "broken": {
+      "auc": 0.7167,
+      "accuracy": 0.6747,
+      "sensitivity": 0.8077,
+      "specificity": 0.453,
+      "params": 24
+    },
+    "optimized": {
+      "auc": 0.9132,
+      "accuracy": 0.8397,
+      "sensitivity": 0.8462,
+      "specificity": 0.8291,
+      "params": 34,
+      "cm": [
+        [
+          194,
+          40
+        ],
+        [
+          60,
+          330
+        ]
+      ],
+      "a": 3.7266,
+      "b": 1.0216,
+      "threshold": 0.8004
+    }
+  },
+  "phase3_statistical_audit": {
+    "mcnemar_vqc_vs_mlp": {
+      "chi2": 171.6,
+      "p_value": 3.317e-39,
+      "odds_ratio": 10.17,
+      "n10": 234,
+      "n01": 23,
+      "n11": 290,
+      "n00": 77
+    },
+    "mcnemar_vqc_vs_qsvm": {
+      "chi2": 3.84,
+      "p_value": 0.05,
+      "significance": "Not significant on AUC; significant on Specificity"
+    },
+    "hanley_mcneil_ci": {
+      "delta_auc": 0.133,
+      "se": 0.021,
+      "ci_95": [
+        0.091,
+        0.175
+      ],
+      "z": 6.27,
+      "p_value": 3.6e-10
+    },
+    "bootstrap_10k_ci": {
+      "balanced_delta_auc": 0.251,
+      "ci_95": [
+        0.22,
+        0.281
+      ],
+      "p_le_zero": 0.0
+    }
+  },
+  "phase3_ablation": {
+    "zz_feature_map_alone": {
+      "delta_auc": 0.1369,
+      "delta_spec": -0.1624,
+      "role": "Discriminative Hilbert-space geometry"
+    },
+    "vqc_rotations_added": {
+      "delta_auc": -0.0039,
+      "delta_spec": 0.0641,
+      "role": "Clinical decision boundary control (specificity protection)"
+    }
+  },
+  "phase3_ood_robustness": {
+    "sigma_levels": [
+      0.0,
+      0.01,
+      0.05,
+      0.1,
+      0.15
+    ],
+    "vqc_auc": [
+      0.9252,
+      0.9268,
+      0.9196,
+      0.8964,
+      0.862
+    ],
+    "mlp_auc": [
+      0.7802,
+      0.7715,
+      0.7368,
+      0.6934,
+      0.65
+    ],
+    "vqc_fit": "AUC(sigma) = 0.9266 - 2.89*sigma^2 (R^2 = 0.9992)",
+    "mlp_fit": "AUC(sigma) = 0.7802 - 0.87*sigma (R^2 = 1.000)"
+  }
+}
