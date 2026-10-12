@@ -1,0 +1,59 @@
+{
+  "project": {
+    "title": "Hilbert Space Topology and Feature Mapping in Medical Image Classification",
+    "dataset": "PneumoniaMNIST",
+    "description": "Quantum-classical hybrid architecture mapping PCA chest X-ray features into 256-dimensional Hilbert space via ZZ Feature Map and Variational Quantum Circuits."
+  },
+  "data": {
+    "dataset_name": "pneumoniamnist",
+    "image_size": 28,
+    "n_channels": 1,
+    "n_classes": 2,
+    "batch_size": 32,
+    "num_workers": 2,
+    "random_seed": 42
+  },
+  "phase0": {
+    "pca_components": 8,
+    "cnn_epochs": 20,
+    "cnn_lr": 0.001,
+    "mlp_hidden": [64, 32],
+    "mlp_epochs": 30,
+    "dropout": 0.3
+  },
+  "phase1": {
+    "n_qubits": 8,
+    "n_zz_layers": 2,
+    "angle_scale": 0.7853981633974483,
+    "use_evr_weights": true,
+    "device": "default.qubit",
+    "svm_C": 5.0,
+    "kernel_audit_samples": 160
+  },
+  "phase2": {
+    "n_qubits": 8,
+    "n_vqc_layers": 2,
+    "ansatz": "Ry_Rz_CNOT",
+    "vqc_lr": 0.02,
+    "lr_decay": 0.985,
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "l2_lambda": 1e-4,
+    "pos_weight": 1.6666666666666667,
+    "optimal_threshold": 0.8004,
+    "early_stopping_patience": 30,
+    "early_stopping_delta": 0.0005
+  },
+  "phase3": {
+    "ood_noise_sigmas": [0.00, 0.01, 0.05, 0.10, 0.15],
+    "bootstrap_resamples": 10000,
+    "mcnemar_alpha": 0.05
+  },
+  "paths": {
+    "data_dir": "data",
+    "results_dir": "results",
+    "checkpoints_dir": "checkpoints",
+    "pretrained_dir": "pretrained",
+    "figures_dir": "figures"
+  }
+}
